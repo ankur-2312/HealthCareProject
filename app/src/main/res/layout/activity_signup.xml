@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/_25dp"
+    tools:context=".SignUp">
+
+    <Button
+        android:id="@+id/butPatient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded"
+        android:text="@string/as_patient" />
+
+    <Button
+        android:id="@+id/butDoctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_25dp"
+        android:background="@drawable/rounded"
+        android:text="@string/as_doctor" />
+
+    <Button
+        android:id="@+id/butPathology"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_25dp"
+        android:background="@drawable/rounded"
+        android:text="@string/as_pathology" />
+
+</LinearLayout>

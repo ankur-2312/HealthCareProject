@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/red"/>
+
+
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/toolbar"
+        android:elevation="3dp"
+        android:layout_centerHorizontal="true">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/ivDp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_signup_image_placeholder"
+            app:civ_background_color="#000000"
+            app:civ_border_width="5dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/hintColor"
+            app:civ_shadow_radius="4"/>
+
+
+        <ImageView
+            android:id="@+id/pickImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_signup_browse_image"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/frameLayout"
+        android:layout_marginTop="@dimen/_25dp"
+        />
+
+
+    <Button
+        android:id="@+id/butConsultation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/online_consultation"
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginTop="@dimen/_50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded"
+
+        />
+
+    <Button
+        android:id="@+id/butChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        android:layout_below="@+id/butConsultation"
+        android:layout_marginTop="@dimen/_50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded"
+
+        />
+
+
+    <Button
+        android:id="@+id/butLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogOut"
+        android:layout_below="@+id/butChat"
+        android:layout_marginTop="@dimen/_50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded"
+
+        />
+
+
+
+
+</RelativeLayout>
+
+
