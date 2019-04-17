@@ -1,7 +1,6 @@
 package com.healthcareproject;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -21,12 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Objects;
-
-import database.Constants;
-import database.MyDatabase;
-import database.UserData;
 
 
 public class SignUpPatient extends AppCompatActivity implements View.OnClickListener, TextWatcher {
@@ -37,6 +31,7 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference database;
+    private DatabaseReference databaseChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +48,8 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
         etPassword.addTextChangedListener(this);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference().child("users");
+        databaseChat = FirebaseDatabase.getInstance().getReference().child("chats");
+
 
     }
 
@@ -70,7 +67,9 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
 
                     current_user_id.child("name").setValue(etName.getText().toString());
                     current_user_id.child("phone_no").setValue(etPhoneNo.getText().toString());
-                    current_user_id.child("user_type").setValue(Cons.USER_PATIENT);
+                    current_user_id.child("user_type").setValue(Constants.USER_PATIENT);
+
+
 
                 }
 

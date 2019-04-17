@@ -17,8 +17,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,38 +28,45 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
-public class HomePatientActivity extends AppCompatActivity implements View.OnClickListener{
+public class HomePatientActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PERMISSION_REQUEST_CODE = 100;
     private static final int GALLERY_REQUEST_CODE = 200;
     private CircularImageView civ;
     private FirebaseAuth auth;
 
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_patient);
         init();
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
     }
 
     private void init() {
+        ImageView ivConsultation = findViewById(R.id.ivConsultation);
+        ImageView ivChat = findViewById(R.id.ivChat);
+        TextView tvName = findViewById(R.id.tvName);
+        ImageView ivShowMore = findViewById(R.id.ivShowMore);
+        tvName.setText(SharedPref.getInstance().getString(Constants.PAT_NAME));
         Toolbar toolbar = findViewById(R.id.toolbar);
-        Button butOnlineConsultation=findViewById(R.id.butConsultation);
-        Button butLogout=findViewById(R.id.butLogOut);
-        Button butChat=findViewById(R.id.butChat);
         toolbar.setTitle(getString(R.string.home));
-        civ=findViewById(R.id.ivDp);
+        civ = findViewById(R.id.ivDp);
         ImageView ivPickImage = findViewById(R.id.pickImage);
-        butOnlineConsultation.setOnClickListener(this);
-        butLogout.setOnClickListener(this);
-        butChat.setOnClickListener(this);
         ivPickImage.setOnClickListener(this);
+        ivShowMore.setOnClickListener(this);
+        ivChat.setOnClickListener(this);
+        ivConsultation.setOnClickListener(this);
     }
-
-
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -175,17 +182,10 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
                 return bitmap;
         }
     }
-    private static Bitmap rotateImage(Bitmap img, int degree) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
-        img.recycle();
-        return rotatedImg;
-    }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.pickImage:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -200,20 +200,43 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
 
-            case R.id.butConsultation:
+            case R.id.ivConsultation:
+
+                startActivity(new Intent(HomePatientActivity.this, OnlineConsultationList.class));
                 break;
 
-            case R.id.butChat:
+            case R.id.ivChat:
                 break;
 
-            case R.id.butLogOut:
-               // SharedPref.getInstance().delete();
-                SharedPref.getInstance().setBoolean(Cons.LOGIN_CHECK,false);
-                startActivity(new Intent(HomePatientActivity.this,LoginActivity.class));
-                auth.signOut();
-                finish();
-                break;
+            case R.id.ivShowMore:
+                showMessageOKCancel1("Do you want to Logout",
+                        new DialogInterface.OnClickListener() {
 
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPref.getInstance().delete();
+                                SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK, false);
+                                startActivity(new Intent(HomePatientActivity.this, LoginActivity.class));
+                                auth.signOut();
+                                finish();
+                            }
+                        });
+                break;
         }
+
+
     }
+
+
+    private void showMessageOKCancel1(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(HomePatientActivity.this)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, okListener)
+                .setNegativeButton(R.string.cancel, null)
+                .create()
+                .show();
+    }
+
+
 }

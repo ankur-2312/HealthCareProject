@@ -10,21 +10,52 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/red"/>
+        android:background="@color/red" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="@dimen/_50dp"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="@dimen/_25dp"
-            android:layout_marginRight="@dimen/_25dp">
+            android:layout_marginRight="@dimen/_25dp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frameLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:elevation="3dp">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/ivDoctorImage"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_signup_image_placeholder"
+                    app:civ_background_color="#000000"
+                    app:civ_border_width="5dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_color="@color/hintColor"
+                    app:civ_shadow_radius="4" />
+
+
+                <ImageView
+                    android:id="@+id/pickImage1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_signup_browse_image" />
+
+            </FrameLayout>
 
 
             <android.support.design.widget.TextInputLayout
@@ -37,13 +68,12 @@
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:maxLines="1"
+                    android:digits="@string/nameRegex"
                     android:hint="@string/name"
-                    android:digits="@string/nameRegex"/>
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
-
 
 
             <android.support.design.widget.TextInputLayout
@@ -52,17 +82,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25dp"
                 app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText"
-                app:errorTextAppearance="@style/ErrorText">
+                app:errorTextAppearance="@style/ErrorText"
+                app:hintTextAppearance="@style/HintText">
 
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:hint="@string/email"/>
+                    android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -71,8 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25dp"
                 app:errorEnabled="true"
-                app:hintTextAppearance="@style/HintText"
                 app:errorTextAppearance="@style/ErrorText"
+                app:hintTextAppearance="@style/HintText"
                 app:passwordToggleEnabled="true">
 
 
@@ -80,9 +110,9 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:hint="@string/password"/>
+                    android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -102,11 +132,10 @@
                     android:id="@+id/etPhoneNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:hint="@string/phone_no"
-                    android:maxLength="10"
                     android:digits="1234567890"
-                    />
+                    android:hint="@string/phone_no"
+                    android:inputType="phone"
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -115,9 +144,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorText"
                 app:hintTextAppearance="@style/HintText">
 
@@ -126,9 +152,8 @@
                     android:id="@+id/etQualification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:hint="@string/qualification"
-                    />
+                    android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -137,9 +162,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorText"
                 app:hintTextAppearance="@style/HintText">
 
@@ -148,9 +170,8 @@
                     android:id="@+id/etSpeciality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:hint="@string/speciality"
-                    />
+                    android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -159,9 +180,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:errorEnabled="true"
                 app:errorTextAppearance="@style/ErrorText"
                 app:hintTextAppearance="@style/HintText">
 
@@ -170,11 +188,10 @@
                     android:id="@+id/etRegistrationNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:hint="@string/registration_no"
-                    android:maxLength="10"
                     android:digits="1234567890"
-                    />
+                    android:hint="@string/registration_no"
+                    android:inputType="phone"
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -182,18 +199,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25dp"
                 android:text="Degree"
-                android:textSize="20sp"
-                android:layout_marginTop="@dimen/_25dp"/>
+                android:textSize="20sp" />
 
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:elevation="3dp"
-                android:layout_gravity="center">
+                android:elevation="3dp">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/ivDp"
@@ -204,37 +221,31 @@
                     app:civ_border_width="5dp"
                     app:civ_shadow="true"
                     app:civ_shadow_color="@color/hintColor"
-                    app:civ_shadow_radius="4"/>
+                    app:civ_shadow_radius="4" />
 
 
                 <ImageView
                     android:id="@+id/pickImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_signup_browse_image"
                     android:layout_gravity="end|bottom"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:src="@drawable/ic_signup_browse_image" />
 
             </FrameLayout>
 
 
-
-
-
-
-
-
             <Button
                 android:id="@+id/butSignUp"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_50dp"
                 android:layout_gravity="center"
-                android:enabled="false"
-                style="@style/Button"
-                android:layout_marginBottom="@dimen/_25dp"/>
+                android:layout_marginTop="@dimen/_50dp"
+                android:layout_marginBottom="@dimen/_25dp"
+                android:enabled="false" />
 
         </LinearLayout>
     </ScrollView>

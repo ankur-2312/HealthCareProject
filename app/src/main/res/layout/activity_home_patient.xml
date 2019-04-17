@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/red"/>
+        android:layout_alignParentTop="true"
+        android:background="@color/red">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/ivShowMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:src="@drawable/ic_more_vert_black_24dp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_below="@id/toolbar"
-        android:elevation="3dp"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:elevation="3dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/ivDp"
@@ -34,70 +58,61 @@
             app:civ_border_width="5dp"
             app:civ_shadow="true"
             app:civ_shadow_color="@color/hintColor"
-            app:civ_shadow_radius="4"/>
+            app:civ_shadow_radius="4" />
 
 
         <ImageView
             android:id="@+id/pickImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_signup_browse_image"
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="10dp"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:src="@drawable/ic_signup_browse_image" />
 
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tvUserName"
+        android:id="@+id/tvFacilities"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/black"
         android:layout_below="@id/frameLayout"
         android:layout_marginTop="@dimen/_25dp"
-        />
+        android:textColor="@color/black"
+        android:text="Facilities To Avail"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp" />
 
-
-    <Button
-        android:id="@+id/butConsultation"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/online_consultation"
-        android:layout_below="@+id/tvUserName"
-        android:layout_marginTop="@dimen/_50dp"
+        android:layout_below="@+id/tvFacilities"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded"
-
-        />
-
-    <Button
-        android:id="@+id/butChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chat"
-        android:layout_below="@+id/butConsultation"
-        android:layout_marginTop="@dimen/_50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded"
-
-        />
+        android:layout_marginTop="@dimen/_50dp">
 
 
-    <Button
-        android:id="@+id/butLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LogOut"
-        android:layout_below="@+id/butChat"
-        android:layout_marginTop="@dimen/_50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded"
-
-        />
+        <ImageView
+            android:id="@+id/ivConsultation"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="@dimen/_50dp"
+            android:src="@drawable/doctormain"
+            android:text="@string/online_consultation"
+            android:scaleType="fitXY"
+            android:clickable="true"/>
 
 
+        <ImageView
+            android:id="@+id/ivChat"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/rounded"
+            android:src="@drawable/conversation"
+            android:scaleType="fitXY"
+            android:clickable="true"/>
+
+    </LinearLayout>
 
 
 </RelativeLayout>

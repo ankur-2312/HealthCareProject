@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -91,30 +92,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                if(task.isSuccessful()) {
                    Log.i("my1",""+"login succcess   "+"https://healthcareproject-4e970.firebaseio.com/users/"+auth.getCurrentUser().getUid()+"/");
 
-                   SharedPref.getInstance().setString(Cons.LOGIN_ID, Objects.requireNonNull(auth.getCurrentUser()).getUid());
+                   SharedPref.getInstance().setString(Constants.LOGIN_ID, Objects.requireNonNull(auth.getCurrentUser()).getUid());
                    ref =new Firebase("https://healthcareproject-4e970.firebaseio.com/users/"+auth.getCurrentUser().getUid()+"/");
                    ref.addValueEventListener(new ValueEventListener() {
                        @Override
                        public void onDataChange(DataSnapshot dataSnapshot) {
 
                            Map<String,String> map= dataSnapshot.getValue(Map.class);
-                           if(Objects.equals(map.get("user_type"), Cons.USER_PATIENT)) {
-                               SharedPref.getInstance().setString(map.get("name"),Cons.PAT_NAME);
-                               SharedPref.getInstance().setString(map.get("phone_no"),Cons.PAT_PHONE);
-                               SharedPref.getInstance().setString(map.get("user_type"),Cons.USER_TYPE);
+                           if(Objects.equals(Constants.USER_PATIENT,map.get("user_type") )) {
+                               SharedPref.getInstance().setString(Constants.PAT_NAME,map.get("name") );
+                               SharedPref.getInstance().setString(Constants.PAT_PHONE,map.get("phone_no"));
+                               SharedPref.getInstance().setString( Constants.USER_TYPE,map.get("user_type"));
+                               SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK,true);
 
                                startActivity(new Intent(LoginActivity.this, HomePatientActivity.class));
                                finish();
                            }
                            else{
                                Log.i("my1","doctor");
-                               SharedPref.getInstance().setString(map.get("name"),Cons.DOC_NAME);
-                               SharedPref.getInstance().setString(map.get("phone_no"),Cons.DOC_PHONE);
-                               SharedPref.getInstance().setString(map.get("speciality"),Cons.DOC_SPECIALITY);
-                               SharedPref.getInstance().setString(map.get("qualification"),Cons.DOC_QUALIFICATION);
-                               SharedPref.getInstance().setString(map.get("registration_no"),Cons.DOC_REGISTRATION_NO);
-                               SharedPref.getInstance().setString(map.get("user_type"),Cons.USER_TYPE);
-                               SharedPref.getInstance().setBoolean(Cons.LOGIN_CHECK,true);
+                               SharedPref.getInstance().setString( Constants.DOC_NAME,(map.get("name")));
+                               SharedPref.getInstance().setString( Constants.DOC_PHONE,map.get("phone_no"));
+                               SharedPref.getInstance().setString(Constants.DOC_SPECIALITY,map.get("speciality") );
+                               SharedPref.getInstance().setString(Constants.DOC_QUALIFICATION,map.get("qualification") );
+                               SharedPref.getInstance().setString(Constants.DOC_REGISTRATION_NO,map.get("registration_no"));
+                               SharedPref.getInstance().setString(Constants.USER_TYPE,map.get("user_type") );
+                               SharedPref.getInstance().setString(Constants.USER_IMAGE,map.get("user_image") );
+                               SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK,true);
 
 
                                startActivity(new Intent(LoginActivity.this, HomeDoctorActivity.class));
