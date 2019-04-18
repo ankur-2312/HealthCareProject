@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 class ChatDataAdapter extends RecyclerView.Adapter {
 
-    private ArrayList<ChatData> chatData;
+    private ArrayList<MessageData> msgData;
 
-    ChatDataAdapter(ArrayList<ChatData> chatData) {
-        this.chatData = chatData;
+    ChatDataAdapter(ArrayList<MessageData> msgData) {
+        this.msgData = msgData;
     }
 
     @NonNull
@@ -37,9 +37,9 @@ class ChatDataAdapter extends RecyclerView.Adapter {
 
 
         if (holder instanceof SenderViewHolder) {
-            ((SenderViewHolder) holder).textView1.setText(chatData.get(position).getName());
+            ((SenderViewHolder) holder).textView1.setText(msgData.get(position).getMessage());
         } else {
-            ((ReceiverViewHolder) holder).textView2.setText(chatData.get(position).getName());
+            ((ReceiverViewHolder) holder).textView2.setText(msgData.get(position).getMessage());
         }
 
     }
@@ -47,15 +47,15 @@ class ChatDataAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return chatData.size();
+        return msgData.size();
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        String id = chatData.get(position).getId();
+        String id = msgData.get(position).getMsg_type();
 
-        if (id.equals("left")) {
+        if (id.equals("sender")) {
             return 1;
         } else {
             return 2;

@@ -4,9 +4,8 @@
     package="com.healthcareproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -17,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ChatActivity"/>
+        <activity android:name=".ChatListActivity"></activity>
+        <activity android:name=".ChatActivity" />
         <activity android:name=".OnlineConsultationList" />
         <activity android:name=".HomeDoctorActivity" />
         <activity android:name=".MainActivity">
@@ -35,6 +35,7 @@
         <activity android:name=".SignUpDoctor" />
         <activity android:name=".Admin" />
         <activity android:name=".HomePatientActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.healthcareproject.fileprovider"

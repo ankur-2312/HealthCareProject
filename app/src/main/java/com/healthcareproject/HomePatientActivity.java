@@ -206,6 +206,7 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.ivChat:
+                startActivity(new Intent(HomePatientActivity.this,ChatListActivity.class));
                 break;
 
             case R.id.ivShowMore:

@@ -23,5 +23,7 @@ public class Constants {
     public static final int CAMERA_REQUEST_CODE = 300;
     public static final String USER_IMAGE="user_image";
     public static final String INTENT_DOCTOR_ID_KEY="doc_key";
+    public static final String MSG_TYPE_SENDER="sender";
+    public static final String MSG_TYPE_RECEIVER="receiver";
 
 }

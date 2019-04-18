@@ -8,7 +8,9 @@ public class DoctorPojo {
 
     private String qualification;
 
-    private String registrationNo;private String id;
+    private String registrationNo;
+
+    private String id;
 
     public String getId() {
         return id;

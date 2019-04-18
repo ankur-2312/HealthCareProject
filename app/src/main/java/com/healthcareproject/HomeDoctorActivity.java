@@ -15,7 +15,7 @@ import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeDoctorActivity extends AppCompatActivity implements View.OnClickListener{
-    private ImageView ivDoctorimage;
+    private ImageView ivDoctorimage,ivChat;
     private FirebaseAuth auth;
 
     @Override
@@ -30,9 +30,10 @@ public class HomeDoctorActivity extends AppCompatActivity implements View.OnClic
 
     private void init(){
         ivDoctorimage=findViewById(R.id.ivDp);
+        ivChat=findViewById(R.id.ivChat);
         ImageView ivShowMore=findViewById(R.id.ivShowMore);
         ivShowMore.setOnClickListener(this);
-
+        ivChat.setOnClickListener(this);
 
     }
 
@@ -58,6 +59,10 @@ public class HomeDoctorActivity extends AppCompatActivity implements View.OnClic
                                 finish();
                             }
                         });
+                break;
+
+            case R.id.ivChat:
+                startActivity(new Intent(HomeDoctorActivity.this,ChatListActivity.class));
                 break;
         }
 
