@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".MainActivity"
     android:background="@color/red">
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/doctor"
+        android:background="@drawable/doctormain"
         tools:ignore="ContentDescription"
         android:scaleType="fitXY"/>
 

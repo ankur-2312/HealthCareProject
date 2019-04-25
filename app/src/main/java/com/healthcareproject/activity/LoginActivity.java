@@ -1,11 +1,10 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -24,6 +24,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.healthcareproject.R;
+import com.healthcareproject.utilities.Constants;
+import com.healthcareproject.utilities.SharedPref;
 
 import java.util.Map;
 import java.util.Objects;
@@ -88,55 +91,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         auth.signInWithEmailAndPassword(etEmail.getText().toString(),etPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.i("my1",""+"enter login");
+                Log.i("my1",""+"enter login"+task.isSuccessful());
                if(task.isSuccessful()) {
-                   Log.i("my1",""+"login succcess   "+"https://healthcareproject-4e970.firebaseio.com/users/"+auth.getCurrentUser().getUid()+"/");
+                   if(auth.getCurrentUser().isEmailVerified()) {
+                       Log.i("my1", "" + "login succcess   " + "https://healthcareproject-4e970.firebaseio.com/users/" + auth.getCurrentUser().getUid() + "/");
 
-                   SharedPref.getInstance().setString(Constants.LOGIN_ID, Objects.requireNonNull(auth.getCurrentUser()).getUid());
-                   ref =new Firebase("https://healthcareproject-4e970.firebaseio.com/users/"+auth.getCurrentUser().getUid()+"/");
-                   ref.addValueEventListener(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(DataSnapshot dataSnapshot) {
+                       SharedPref.getInstance().setString(Constants.LOGIN_ID, Objects.requireNonNull(auth.getCurrentUser()).getUid());
+                       ref = new Firebase("https://healthcareproject-4e970.firebaseio.com/users/" + auth.getCurrentUser().getUid() + "/");
+                       ref.addValueEventListener(new ValueEventListener() {
+                           @Override
+                           public void onDataChange(DataSnapshot dataSnapshot) {
 
-                           Map<String,String> map= dataSnapshot.getValue(Map.class);
-                           if(Objects.equals(Constants.USER_PATIENT,map.get("user_type") )) {
-                               SharedPref.getInstance().setString(Constants.PAT_NAME,map.get("name") );
-                               SharedPref.getInstance().setString(Constants.PAT_PHONE,map.get("phone_no"));
-                               SharedPref.getInstance().setString( Constants.USER_TYPE,map.get("user_type"));
-                               SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK,true);
+                               Map<String, String> map = dataSnapshot.getValue(Map.class);
+                               if (Objects.equals(Constants.USER_PATIENT, map.get("user_type"))) {
+                                   SharedPref.getInstance().setString(Constants.PAT_NAME, map.get("name"));
+                                   SharedPref.getInstance().setString(Constants.PAT_PHONE, map.get("phone_no"));
+                                   SharedPref.getInstance().setString(Constants.USER_TYPE, map.get("user_type"));
+                                   SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK, true);
 
-                               startActivity(new Intent(LoginActivity.this, HomePatientActivity.class));
-                               finish();
+                                   startActivity(new Intent(LoginActivity.this, HomePatientActivity.class));
+                                   finish();
+                               } else {
+                                   SharedPref.getInstance().setString(Constants.DOC_NAME, (map.get("name")));
+                                   SharedPref.getInstance().setString(Constants.DOC_PHONE, map.get("phone_no"));
+                                   SharedPref.getInstance().setString(Constants.DOC_SPECIALITY, map.get("speciality"));
+                                   SharedPref.getInstance().setString(Constants.DOC_QUALIFICATION, map.get("qualification"));
+                                   SharedPref.getInstance().setString(Constants.DOC_REGISTRATION_NO, map.get("registration_no"));
+                                   SharedPref.getInstance().setString(Constants.USER_TYPE, map.get("user_type"));
+                                   SharedPref.getInstance().setString(Constants.USER_IMAGE, map.get("user_image"));
+                                   SharedPref.getInstance().setString(Constants.USER_ID,map.get("user_id"));
+                                   SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK, true);
+
+
+                                   startActivity(new Intent(LoginActivity.this, HomeDoctorActivity.class));
+                                   finish();
+
+                               }
+
                            }
-                           else{
-                               Log.i("my1","doctor");
-                               SharedPref.getInstance().setString( Constants.DOC_NAME,(map.get("name")));
-                               SharedPref.getInstance().setString( Constants.DOC_PHONE,map.get("phone_no"));
-                               SharedPref.getInstance().setString(Constants.DOC_SPECIALITY,map.get("speciality") );
-                               SharedPref.getInstance().setString(Constants.DOC_QUALIFICATION,map.get("qualification") );
-                               SharedPref.getInstance().setString(Constants.DOC_REGISTRATION_NO,map.get("registration_no"));
-                               SharedPref.getInstance().setString(Constants.USER_TYPE,map.get("user_type") );
-                               SharedPref.getInstance().setString(Constants.USER_IMAGE,map.get("user_image") );
-                               SharedPref.getInstance().setBoolean(Constants.LOGIN_CHECK,true);
 
-
-                               startActivity(new Intent(LoginActivity.this, HomeDoctorActivity.class));
-                               finish();
+                           @Override
+                           public void onCancelled(FirebaseError firebaseError) {
 
                            }
-
-                       }
-
-                       @Override
-                       public void onCancelled(FirebaseError firebaseError) {
-
-                       }
-                   });
+                       });
+                   }
+                   else {
+                       Toast.makeText(LoginActivity.this, "Please verify your email first", Toast.LENGTH_SHORT).show();
+                   }
 
 
                 }
-                else{
-                   Log.i("my1",""+task.getResult())  ;
+                if(!task.isSuccessful()){
+                   Toast.makeText(LoginActivity.this, "Error Login", Toast.LENGTH_SHORT).show();
+                   Log.i("my1","lkdsmds,"+task.getResult())  ;
                }
             }
         });

@@ -1,4 +1,4 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,11 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.healthcareproject.R;
+import com.healthcareproject.adapter.HorizontalListAdapter;
+import com.healthcareproject.model.DoctorPojo;
+import com.healthcareproject.utilities.Constants;
+import com.healthcareproject.utilities.HorizontalRecyclerViewClickListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -49,7 +54,7 @@ public class OnlineConsultationList extends AppCompatActivity implements Horizon
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 Map<String, String> map = dataSnapshot.getValue(Map.class);
-                if (Objects.equals(map.get("user_type"), Constants.USER_DOCTOR)) {
+                if (Objects.equals(map.get("user_type"), Constants.USER_DOCTOR)&& Objects.equals(map.get("is_available"), "1")) {
                     DoctorPojo doctorPojo = new DoctorPojo();
                     doctorPojo.setDocName(map.get("name"));
                     doctorPojo.setQualification(map.get("qualification"));

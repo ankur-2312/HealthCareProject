@@ -1,4 +1,4 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -19,11 +19,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.healthcareproject.R;
+import com.healthcareproject.utilities.Constants;
+import com.healthcareproject.utilities.SharedPref;
 import com.mikhaellopez.circularimageview.CircularImageView;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -55,17 +56,19 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
     private void init() {
         ImageView ivConsultation = findViewById(R.id.ivConsultation);
         ImageView ivChat = findViewById(R.id.ivChat);
+        ImageView ivQuery=findViewById(R.id.ivQuery);
         TextView tvName = findViewById(R.id.tvName);
         ImageView ivShowMore = findViewById(R.id.ivShowMore);
         tvName.setText(SharedPref.getInstance().getString(Constants.PAT_NAME));
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.home));
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        toolbar.setTitle(getString(R.string.home));
         civ = findViewById(R.id.ivDp);
         ImageView ivPickImage = findViewById(R.id.pickImage);
         ivPickImage.setOnClickListener(this);
         ivShowMore.setOnClickListener(this);
         ivChat.setOnClickListener(this);
         ivConsultation.setOnClickListener(this);
+        ivQuery.setOnClickListener(this);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -206,7 +209,7 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.ivChat:
-                startActivity(new Intent(HomePatientActivity.this,ChatListActivity.class));
+                startActivity(new Intent(HomePatientActivity.this, ChatListActivity.class));
                 break;
 
             case R.id.ivShowMore:
@@ -223,6 +226,9 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
                                 finish();
                             }
                         });
+                break;
+
+            case R.id.ivQuery:
                 break;
         }
 

@@ -1,10 +1,12 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import com.healthcareproject.R;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,10 +20,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private void init(){
         Button butPatient = findViewById(R.id.butPatient);
         Button butDoctor = findViewById(R.id.butDoctor);
-        Button butPathology = findViewById(R.id.butPathology);
         butPatient.setOnClickListener(this);
         butDoctor.setOnClickListener(this);
-        butPathology.setOnClickListener(this);
     }
 
     @Override
@@ -32,12 +32,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             case R.id.butDoctor:
-                startActivity(new Intent(SignUp.this,Admin.class));
+                startActivity(new Intent(SignUp.this, Admin.class));
                 break;
 
 
-            case R.id.butPathology:
-                break;
+
         }
 
     }

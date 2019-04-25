@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:layout_above="@+id/b1"/>
+        android:layout_above="@+id/bottomParent"
+        tools:context=".MainActivity" />
 
 
-    <Button
-        android:id="@+id/b1"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/bottomParent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="sender"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/b1"
-        android:layout_toStartOf="@+id/butsend"
-        android:layout_alignParentBottom="true"
-        android:maxLines="2"
-        android:inputType="text"
-        tools:ignore="Autofill,LabelFor" />
+        <ImageView
+            android:id="@+id/ivSend"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sent_mail"
+            android:visibility="invisible" />
 
-    <Button
-        android:id="@+id/butsend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="receiver"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"/>
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_comment_activity"
+            android:inputType="text"
+            android:minHeight="50dp"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textSize="14sp" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>

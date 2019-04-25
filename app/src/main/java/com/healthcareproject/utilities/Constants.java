@@ -1,4 +1,4 @@
-package com.healthcareproject;
+package com.healthcareproject.utilities;
 
 public class Constants {
 
@@ -25,5 +25,7 @@ public class Constants {
     public static final String INTENT_DOCTOR_ID_KEY="doc_key";
     public static final String MSG_TYPE_SENDER="sender";
     public static final String MSG_TYPE_RECEIVER="receiver";
+    public static final String USER_ID="user_id";
+
 
 }

@@ -1,4 +1,4 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.healthcareproject.R;
+import com.healthcareproject.utilities.Constants;
 
 import java.util.Objects;
 
@@ -27,7 +30,7 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
 
     private EditText etName, etEmail, etPhoneNo, etPassword; //EditText for Name,Email and PhoneNo
     private Button butSignUp;                  //Button for SignUp Up
-    private TextInputLayout tilPhone, tilEmail;//TextInputLayout for Phone NO and Email
+    private TextInputLayout tilPhone, tilEmail,tilPassword;//TextInputLayout for Phone NO and Email
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference database;
@@ -68,7 +71,20 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
                     current_user_id.child("name").setValue(etName.getText().toString());
                     current_user_id.child("phone_no").setValue(etPhoneNo.getText().toString());
                     current_user_id.child("user_type").setValue(Constants.USER_PATIENT);
+                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()) {
+                                Toast.makeText(SignUpPatient.this, "Registration successful.Please check your email for verification", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SignUpPatient.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(SignUpPatient.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
+                        }
+                    });
 
 
                 }
@@ -81,8 +97,7 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         signUp();
-        startActivity(new Intent(SignUpPatient.this, LoginActivity.class));
-        finish();
+
     }
 
     @Override
@@ -98,15 +113,16 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
         String name = etName.getText().toString();
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
-        boolean flagEmail = false, flagPhoneNo, flagEmpty, flagSpace, flagEmailCheck;
+        boolean flagEmail, flagPhoneNo, flagEmpty, flagSpace, flagPassword;
 
 
         flagEmail = validateEmail(email);
         flagPhoneNo = validatePhoneNo(phoneNo);
+        flagPassword=validatePassword(password);
         flagEmpty = validateEmpty(name, email, phoneNo, password);
         flagSpace = validateSpace(name, email, phoneNo, password);
 
-        if (flagPhoneNo && flagEmpty && flagSpace  && flagEmail) {
+        if (flagPhoneNo && flagEmpty && flagSpace  && flagEmail&& flagPassword) {
             butSignUp.setEnabled(true);
         } else {
             butSignUp.setEnabled(false);
@@ -126,6 +142,7 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
         etPhoneNo = findViewById(R.id.etPhoneNo);
         tilPhone = findViewById(R.id.tilPhone);
         tilEmail = findViewById(R.id.tilEmail);
+        tilPassword=findViewById(R.id.tilPassword);
         etPassword = findViewById(R.id.etPassword);
     }
 
@@ -162,6 +179,17 @@ public class SignUpPatient extends AppCompatActivity implements View.OnClickList
     //Method to validate all EditText fields for space
     private boolean validateSpace(String name, String email, String phoneNo, String password) {
         return !name.trim().equals("") && !email.trim().equals("") && !phoneNo.trim().equals("") && !password.trim().equals("");
+    }
+
+    private boolean validatePassword(String password){
+        if(password.length()<8&&password.length()>0){
+            tilPassword.setError("Min 8 characters are req");
+            return false;
+        }
+        else {
+            tilPassword.setError(null);
+            return true;
+        }
     }
 
 

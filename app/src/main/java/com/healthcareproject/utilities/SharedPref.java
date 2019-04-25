@@ -1,10 +1,12 @@
-package com.healthcareproject;
+package com.healthcareproject.utilities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-class SharedPref {
+import com.healthcareproject.R;
+
+public class SharedPref {
 
    @SuppressLint("StaticFieldLeak")
    static private SharedPref instance;  //Instance of this class
@@ -16,31 +18,31 @@ class SharedPref {
    }
 
    //Method to create the instance of this class only once
-   static void contextHandler(Context context) {
+   public static void contextHandler(Context context) {
        if(instance==null) {
            instance=new SharedPref(context);
        }
    }
 
     //Method to return the the instance of this class to other class
-   static SharedPref getInstance() {
+   public static SharedPref getInstance() {
        return instance;
    }
 
      //Method to set integer in shared preferences
-    void setString(String key,String value) {
+     public void setString(String key, String value) {
        SharedPreferences.Editor editor = sharedPref.edit();
        editor.putString(key, value).apply();
    }
 
       //Method to retrieve integer from shared preferences
       @SuppressWarnings("SameParameterValue")
-      String getString(String key) {
+      public String getString(String key) {
        return sharedPref.getString(key,"");
    }
 
    //Method to delete shared preferences
-   void delete()
+   public void delete()
    {
        sharedPref.edit().clear().apply();
    }

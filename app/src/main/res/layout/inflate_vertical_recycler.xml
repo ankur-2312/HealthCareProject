@@ -3,6 +3,7 @@
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -119,15 +120,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/butAvailable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Available"
-            android:background="@color/SeaGreen"
-            android:layout_below="@id/l"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"/>
 
 
     </RelativeLayout>

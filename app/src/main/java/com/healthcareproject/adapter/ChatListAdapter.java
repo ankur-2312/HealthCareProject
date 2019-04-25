@@ -1,24 +1,32 @@
-package com.healthcareproject;
+package com.healthcareproject.adapter;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.healthcareproject.MyApplication;
+import com.healthcareproject.R;
+import com.healthcareproject.activity.ChatActivity;
+import com.healthcareproject.activity.ChatListActivity;
+import com.healthcareproject.model.model;
+import com.healthcareproject.utilities.Constants;
 
 import java.util.ArrayList;
 
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyViewHolder> {
 
-    private ArrayList<String> arrayList;
+    private ArrayList<model> arrayList;
     private ChatListActivity listener;
 
-    public ChatListAdapter(ArrayList<String> arrayList, ChatListActivity listener) {
+    public ChatListAdapter(ArrayList<model> arrayList, ChatListActivity listener) {
 
         this.arrayList=arrayList;
         this.listener=listener;
@@ -30,41 +38,38 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View inflateView = layoutInflater.inflate(R.layout.inflate_vertical_recycler, parent, false);
+        View inflateView = layoutInflater.inflate(R.layout.inflate_chat_list, parent, false);
         return new MyViewHolder(inflateView,listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.tvDocNAme.setText(arrayList.get(position));
-//        holder.tvSpeciality.setText(arrayList.get(position).getSpeciality());
-//        holder.tvQualification.setText(arrayList.get(position).getQualification());
-//        holder.tvRegistrationNo.setText(arrayList.get(position).getRegistrationNo());
+        holder.tvName.setText(arrayList.get(position).getName());
+
     }
 
 
     @Override
     public int getItemCount() {
         return arrayList.size();
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageView ivDocImage;
-        private TextView tvDocNAme,tvSpeciality,tvQualification,tvRegistrationNo;
+        private TextView tvName;
         private ChatListActivity listener;
-        private Button butAvailable;
+        private CardView parentContainer;
 
         MyViewHolder(View itemView, ChatListActivity listener) {
             super(itemView);
             this.listener=listener;
-            tvDocNAme=itemView.findViewById(R.id.tvDocNAme);
-            tvSpeciality=itemView.findViewById(R.id.tvSpeciality);
-            tvQualification=itemView.findViewById(R.id.tvqualification);
-            tvRegistrationNo=itemView.findViewById(R.id.tvRegistrationNo);
-            butAvailable=itemView.findViewById(R.id.butAvailable);
-            butAvailable.setOnClickListener(this);
+            tvName=itemView.findViewById(R.id.tvName);
+            parentContainer=itemView.findViewById(R.id.parentContainer);
+            parentContainer.setOnClickListener(this);
+
         }
 
 
@@ -73,9 +78,9 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
 
             switch (v.getId()){
 
-                case R.id.butAvailable:
-                   Intent intent =new Intent(MyApplication.getContext(),ChatActivity.class);
-                    intent.putExtra(Constants.INTENT_DOCTOR_ID_KEY,arrayList.get(getAdapterPosition()));
+                case R.id.parentContainer:
+                   Intent intent =new Intent(MyApplication.getContext(), ChatActivity.class);
+                    intent.putExtra(Constants.INTENT_DOCTOR_ID_KEY,arrayList.get(getAdapterPosition()).getKey());
                     listener.startActivity(intent);
                     break;
             }

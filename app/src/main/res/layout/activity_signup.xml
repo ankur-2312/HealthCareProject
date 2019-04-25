@@ -24,12 +24,6 @@
         android:background="@drawable/rounded"
         android:text="@string/as_doctor" />
 
-    <Button
-        android:id="@+id/butPathology"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_25dp"
-        android:background="@drawable/rounded"
-        android:text="@string/as_pathology" />
+
 
 </LinearLayout>

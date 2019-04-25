@@ -1,4 +1,4 @@
-package com.healthcareproject;
+package com.healthcareproject.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.healthcareproject.R;
+import com.healthcareproject.model.MessageData;
+
 import java.util.ArrayList;
 
 
-class ChatDataAdapter extends RecyclerView.Adapter {
+public class ChatDataAdapter extends RecyclerView.Adapter {
 
     private ArrayList<MessageData> msgData;
 
-    ChatDataAdapter(ArrayList<MessageData> msgData) {
+    public ChatDataAdapter(ArrayList<MessageData> msgData) {
         this.msgData = msgData;
     }
 
@@ -55,7 +58,7 @@ class ChatDataAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         String id = msgData.get(position).getMsg_type();
 
-        if (id.equals("sender")) {
+        if (id.equals("receiver")) {
             return 1;
         } else {
             return 2;

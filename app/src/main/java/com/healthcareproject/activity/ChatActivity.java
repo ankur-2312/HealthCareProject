@@ -1,13 +1,17 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -15,16 +19,21 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.healthcareproject.R;
+import com.healthcareproject.adapter.ChatDataAdapter;
+import com.healthcareproject.model.MessageData;
+import com.healthcareproject.utilities.Constants;
+import com.healthcareproject.utilities.SharedPref;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     private String receiver_id;
     private DatabaseReference databaseChat;
     private DatabaseReference databaseReceive;
-    private Button butsend;
+    private ImageView ivSend;
     private EditText editText;
     private Firebase ref;
     private ArrayList<MessageData> arrayList;
@@ -40,14 +49,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         databaseChat = FirebaseDatabase.getInstance().getReference().child("chats");
         databaseReceive = FirebaseDatabase.getInstance().getReference().child("chats");
         getData();
-
-
     }
 
     private void initViews() {
-        butsend = findViewById(R.id.butsend);
+        ivSend = findViewById(R.id.ivSend);
         editText = findViewById(R.id.editText);
-        butsend.setOnClickListener(this);
+        ivSend.setOnClickListener(this);
+        editText.addTextChangedListener(this);
         rv = findViewById(R.id.rv);
         arrayList = new ArrayList<>();
         chatDataAdapter = new ChatDataAdapter(arrayList);
@@ -123,4 +131,31 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        if (!editText.getText().toString().trim().isEmpty()) {
+
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            params.rightMargin = (int) (60 * Resources.getSystem().getDisplayMetrics().density);
+            editText.setLayoutParams(params);
+            ivSend.setVisibility(View.VISIBLE);
+
+        } else {
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            editText.setLayoutParams(params);
+            ivSend.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

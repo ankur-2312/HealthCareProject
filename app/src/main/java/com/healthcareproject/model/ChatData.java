@@ -1,4 +1,4 @@
-package com.healthcareproject;
+package com.healthcareproject.model;
 
 
 class ChatData {

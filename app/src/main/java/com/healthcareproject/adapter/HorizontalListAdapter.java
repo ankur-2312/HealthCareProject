@@ -1,7 +1,8 @@
-package com.healthcareproject;
+package com.healthcareproject.adapter;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.healthcareproject.MyApplication;
+import com.healthcareproject.R;
+import com.healthcareproject.activity.ChatActivity;
+import com.healthcareproject.activity.OnlineConsultationList;
+import com.healthcareproject.model.DoctorPojo;
+import com.healthcareproject.utilities.Constants;
 
 import java.util.ArrayList;
 
@@ -54,7 +62,7 @@ public class HorizontalListAdapter extends RecyclerView.Adapter<HorizontalListAd
          private ImageView ivDocImage;
          private TextView tvDocNAme,tvSpeciality,tvQualification,tvRegistrationNo;
          private OnlineConsultationList listener;
-         private Button butAvailable;
+         private CardView parentContainer;
 
          MyViewHolder(View itemView, OnlineConsultationList listener) {
              super(itemView);
@@ -63,8 +71,8 @@ public class HorizontalListAdapter extends RecyclerView.Adapter<HorizontalListAd
              tvSpeciality=itemView.findViewById(R.id.tvSpeciality);
              tvQualification=itemView.findViewById(R.id.tvqualification);
              tvRegistrationNo=itemView.findViewById(R.id.tvRegistrationNo);
-             butAvailable=itemView.findViewById(R.id.butAvailable);
-             butAvailable.setOnClickListener(this);
+             parentContainer=itemView.findViewById(R.id.parentContainer);
+             parentContainer.setOnClickListener(this);
          }
 
 
@@ -73,8 +81,8 @@ public class HorizontalListAdapter extends RecyclerView.Adapter<HorizontalListAd
 
              switch (v.getId()){
 
-                 case R.id.butAvailable:
-                    Intent intent =new Intent(MyApplication.getContext(),ChatActivity.class);
+                 case R.id.parentContainer:
+                    Intent intent =new Intent(MyApplication.getContext(), ChatActivity.class);
                      intent.putExtra(Constants.INTENT_DOCTOR_ID_KEY,arrayList.get(getAdapterPosition()).getId());
                      listener.startActivity(intent);
                      break;

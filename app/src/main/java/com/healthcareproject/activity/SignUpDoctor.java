@@ -1,11 +1,10 @@
-package com.healthcareproject;
+package com.healthcareproject.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
@@ -29,6 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,22 +37,21 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.healthcareproject.R;
+import com.healthcareproject.utilities.Constants;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-
-import database.MyDatabase;
 
 public class SignUpDoctor extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     private EditText etName, etEmail, etPhoneNo, etPassword,etSpeciality,etQualification,etRegistrationNo; //EditText for Name,Email and PhoneNo
     private Button butSignUp;                  //Button for SignUp Up
-    private TextInputLayout tilPhone, tilEmail;//TextInputLayout for Phone NO and Email
+    private TextInputLayout tilPhone, tilEmail,tilPassword;//TextInputLayout for Phone NO and Email
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference database;
@@ -94,9 +93,25 @@ public class SignUpDoctor extends AppCompatActivity implements View.OnClickListe
                     current_user_id.child("registration_no").setValue(etRegistrationNo.getText().toString());
                     current_user_id.child("user_id").setValue(mAuth.getCurrentUser().getUid());
                     current_user_id.child("user_image").setValue(currentPhotoPath);
+                    current_user_id.child("is_available").setValue("0");
+
 
                     DatabaseReference current_chat=databaseChat.child(uId);
                     current_chat.child("msg_send").setValue("send");
+                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(SignUpDoctor.this, "Registration successful.Please check your email for verification", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SignUpDoctor.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(SignUpDoctor.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
 
 
                 }
@@ -112,8 +127,6 @@ public class SignUpDoctor extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.butSignUp:
                 signUp();
-                startActivity(new Intent(SignUpDoctor.this, LoginActivity.class));
-                finish();
                 break;
 
             case R.id. pickImage1:
@@ -179,19 +192,15 @@ public class SignUpDoctor extends AppCompatActivity implements View.OnClickListe
         String speciality=etSpeciality.getText().toString();
         String qualification=etQualification.getText().toString();
         String registrationNo=etRegistrationNo.getText().toString();
-        boolean flagEmail = false, flagPhoneNo, flagEmpty, flagSpace, flagEmailCheck;
+        boolean flagEmail , flagPhoneNo, flagEmpty, flagSpace, flagPassword;
 
-
-
-
-            flagEmail = validateEmail(email);
-
-
+        flagEmail = validateEmail(email);
+        flagPassword=validatePassword(password);
         flagPhoneNo = validatePhoneNo(phoneNo);
         flagEmpty = validateEmpty(name, email, phoneNo, password,speciality,qualification,registrationNo);
         flagSpace = validateSpace(name, email, phoneNo, password,speciality,qualification,registrationNo);
 
-        if (flagPhoneNo && flagEmpty && flagSpace  && flagEmail) {
+        if (flagPhoneNo && flagEmpty && flagSpace  && flagEmail&&flagPassword) {
             butSignUp.setEnabled(true);
         } else {
             butSignUp.setEnabled(false);
@@ -227,6 +236,7 @@ public class SignUpDoctor extends AppCompatActivity implements View.OnClickListe
         etRegistrationNo.addTextChangedListener(this);
         etQualification.addTextChangedListener(this);
         ivPickImage.setOnClickListener(this);
+        tilPassword=findViewById(R.id.tilPassword);
     }
 
     //Method to check the valid Email Address
@@ -267,7 +277,7 @@ public class SignUpDoctor extends AppCompatActivity implements View.OnClickListe
 
 
     private void pickFromGallerySingle() {
-        Intent captureIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent captureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(captureIntent, Constants.GALLERY_REQUEST_CODE);
     }
 
@@ -448,6 +458,17 @@ public class SignUpDoctor extends AppCompatActivity implements View.OnClickListe
         Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
         img.recycle();
         return rotatedImg;
+    }
+
+    private boolean validatePassword(String password){
+        if(password.length()<8){
+            tilPassword.setError("Min 8 characters are req");
+            return false;
+        }
+        else {
+            tilPassword.setError(null);
+            return true;
+        }
     }
 
 

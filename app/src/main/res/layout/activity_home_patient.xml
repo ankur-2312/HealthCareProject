@@ -80,7 +80,7 @@
         android:layout_below="@id/frameLayout"
         android:layout_marginTop="@dimen/_25dp"
         android:textColor="@color/black"
-        android:text="Facilities To Avail"
+        android:text="@string/facilities_to_avail"
         android:layout_centerHorizontal="true"
         android:textSize="20sp" />
 
@@ -89,28 +89,75 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvFacilities"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_50dp">
+        android:layout_marginTop="@dimen/_50dp"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/ivConsultation"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="@dimen/_50dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/doctormain"
-            android:text="@string/online_consultation"
             android:scaleType="fitXY"
-            android:clickable="true"/>
+            android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/online_consultation"/>
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_25dp">
 
 
         <ImageView
             android:id="@+id/ivChat"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/rounded"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/conversation"
             android:scaleType="fitXY"
-            android:clickable="true"/>
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chat_list"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_25dp">
+
+
+            <ImageView
+                android:id="@+id/ivQuery"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/pros_and_cons"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/health_guru"/>
+        </LinearLayout>
 
     </LinearLayout>
 
