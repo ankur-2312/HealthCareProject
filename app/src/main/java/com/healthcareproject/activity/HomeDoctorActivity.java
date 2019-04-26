@@ -89,6 +89,9 @@ public class HomeDoctorActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.ivQuery:
+                Intent in=new Intent(HomeDoctorActivity.this,HealthGuru.class);
+                in.putExtra("asd",1);
+                startActivity(in);
                 break;
         }
 

@@ -229,6 +229,9 @@ public class HomePatientActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.ivQuery:
+                Intent in=new Intent(HomePatientActivity.this,HealthGuru.class);
+                in.putExtra("asd",0);
+                startActivity(in);
                 break;
         }
 

@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activity.HealthGuru"></activity>
         <activity android:name=".activity.Admin" />
         <activity android:name=".activity.ChatListActivity" />
         <activity android:name=".activity.ChatActivity" />
@@ -26,12 +27,12 @@
         <activity android:name=".activity.SignUp" />
         <activity android:name=".activity.SignUpDoctor" />
         <activity android:name=".activity.SignUpPatient" />
-        <activity android:name=".activity.MainActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <provider
@@ -44,6 +45,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
 
 </manifest>
